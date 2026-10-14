@@ -12,7 +12,7 @@ Cell khởi tạo và cell cài thư viện được tách riêng. Khởi tạo 
 6. Nếu muốn tải qua Kaggle CLI, đổi DATA_MODE thành `kaggle` và thiết lập KAGGLE_USERNAME/KAGGLE_KEY trong Colab Secrets (biểu tượng chìa khóa, bật Notebook access). Notebook chỉ hỏi nhập nếu chưa có secret/environment.
 7. Sau mỗi giai đoạn, notebook tạo ZIP và gọi `google.colab.files.download`. Cho phép trình duyệt tải nhiều file. File thường nằm ở Downloads hoặc vị trí bạn chọn trong hộp thoại trình duyệt; notebook không tự ghi trực tiếp vào ổ D:.
 8. Nếu download bị chặn, mở bảng Files bên trái → `/content/lab-day10/work/exports/` → ZIP tương ứng → menu ba chấm → Download.
-9. Sau E4, tải `final.zip` và giải nén vào thư mục gốc repo Windows. ZIP có `report/` và `work/`; giữ report/evidence, ảnh và report/REPORT_DRAFT.md. Điền phân tích cá nhân rồi chuyển báo cáo hoàn chỉnh vào REPORT.md.
+9. Sau E4, cell cuối tạo `REPORT.md` mang tên Nguyễn Văn Hồng từ evidence đầy đủ, rồi tải `final.zip`. Giải nén vào thư mục gốc repo Windows; ZIP có REPORT.md, report/ và work/. Đọc báo cáo, đối chiếu sáu ảnh dự đoán và kiểm tra các tiêu chí đạt/chưa đạt trước khi nộp.
 
 Không cần bộ đồng bộ Windows hoặc Auto Save của VS Code. Hướng dẫn VS Code trong các file cũ đã được thay thế bằng quy trình này.
 

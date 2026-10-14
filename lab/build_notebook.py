@@ -165,10 +165,13 @@ backup_results('e4-report')
 for path in sorted(Path('report/figures/predictions').glob('*.png')):
     display(DisplayImage(filename=str(path)))''')
     md("## 9. Báo cáo, backup và nộp\n"
-       "Đọc `report/REPORT_DRAFT.md`, điền phần phân tích cá nhân rồi đưa nội dung vào `REPORT.md`.\n"
+       "Cell cuối tạo `REPORT.md` từ evidence đầy đủ. Đọc báo cáo và đối chiếu ảnh trước khi nộp.\n"
        "ZIP kết quả được tải qua trình duyệt; giải nén vào repo local, giữ nguyên scripts/tests và commit theo tiến độ thật.\n"
        "E5 tùy chọn: `lab.reward.iou_reward` đã có test; chưa chạy GRPO, không tính là evidence bonus.")
-    code('''archive_path = backup_results('final')
+    code('''STUDENT_NAME = 'Nguyễn Văn Hồng'
+cmd('-m', 'lab.final_report', '--author', STUDENT_NAME)
+print(Path('REPORT.md').read_text(encoding='utf-8'))
+archive_path = backup_results('final')
 print('ZIP dự phòng trên Colab:', archive_path)
 print('Giải nén final.zip vào thư mục gốc repo Windows; ZIP chứa report/ và work/.')
 print('Nếu trình duyệt chặn tải, mở Files bên trái Colab → work/exports → final.zip → Download.')

@@ -15,6 +15,9 @@ def result_archive(root="."):
     files += list((root/"work").glob("*.jsonl")) + list((root/"work").glob("*.run.json"))
     files += list((root/"work/validation").glob("*.json"))
     files += list((root/"work/runs").glob("*/run.json"))
+    completed_report = root / "REPORT.md"
+    if completed_report.is_file() and "<điền" not in completed_report.read_text(encoding="utf-8"):
+        files.append(completed_report)
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
         for file in sorted(set(files)):
