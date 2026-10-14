@@ -200,7 +200,7 @@ def train(config, data_root, output, fraction=1.0, coord="norm1000", backup=None
             return (step+1)/warmup
         return .5*(1+math.cos(math.pi*min(1, (step-warmup)/(steps-warmup))))
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_factor)
-    scaler = torch.amp.GradScaler("cuda")
+    scaler = torch.amp.GradScaler("cuda", init_scale=256.0)
     loader = DataLoader(RoadDataset(rows, data_root, processor, coord),
         batch_size=config["batch_size"], shuffle=True, num_workers=0,
         collate_fn=partial(collate_examples, pad_token_id=processor.tokenizer.pad_token_id))
@@ -217,7 +217,9 @@ def train(config, data_root, output, fraction=1.0, coord="norm1000", backup=None
     torch.cuda.reset_peak_memory_stats()
     started = time.perf_counter()
     optimizer.zero_grad(set_to_none=True)
-    for step in range(1, steps+1):
+    step = 1
+    consecutive_overflows = 0
+    while step <= steps:
         total_loss = 0.0
         for _ in range(config["grad_accum"]):
             try:
@@ -238,7 +240,14 @@ def train(config, data_root, output, fraction=1.0, coord="norm1000", backup=None
         scaler.step(optimizer)
         scaler.update()
         if scaler.get_scale() < before or not torch.isfinite(norm):
-            raise FloatingPointError("Optimizer step skipped due to non-finite gradients; reduce LR and rerun")
+            optimizer.zero_grad(set_to_none=True)
+            consecutive_overflows += 1
+            if consecutive_overflows >= 20:
+                raise FloatingPointError("20 consecutive gradient overflows; training cannot progress")
+            print(f"{config['name']} gradient overflow: scale={scaler.get_scale()}; "
+                  f"retry optimizer step {step}", flush=True)
+            continue
+        consecutive_overflows = 0
         scheduler.step()
         optimizer.zero_grad(set_to_none=True)
         run["completed_steps"] = step
@@ -255,6 +264,7 @@ def train(config, data_root, output, fraction=1.0, coord="norm1000", backup=None
             if backup:
                 shutil.copytree(checkpoint, Path(backup)/output.name/checkpoint.name, dirs_exist_ok=True)
                 write_json(Path(backup)/output.name/"run.json", run)
+        step += 1
     return run
 
 

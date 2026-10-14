@@ -59,6 +59,8 @@ print('work/:', (ROOT/'work').is_dir(), '| notebook:', notebook_path.is_file())'
     code('''
 cmd('-c', "import torch; assert torch.cuda.is_available(), 'Colab runtime chưa có GPU'; print('GPU:', torch.cuda.get_device_name(0))")
 cmd('-m', 'pip', 'install', '-r', 'requirements-colab.txt')
+# This lab uses bitsandbytes; Colab's optional torchao can break PEFT ViT LoRA.
+cmd('-m', 'pip', 'uninstall', '-y', 'torchao')
 cmd('-m', 'pip', 'install', 'pytest')
 cmd('-m', 'lab', 'doctor')
 cmd('-m', 'pytest', '-q', 'tests', 'student_checks', '--basetemp=work/notebook-tests', '--tb=short', '-ra')
