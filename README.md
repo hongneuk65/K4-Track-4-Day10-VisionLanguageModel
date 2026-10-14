@@ -3,6 +3,11 @@
 > Track 4 · Ngày 10 · *Nhãn, auto-labeling và Vision–Language Model* · **bài cá nhân** · ≈ 4 giờ trên **Google Colab T4 (miễn phí)**
 > Bạn **tự viết** phần huấn luyện và suy luận theo pseudo code trong [`GUIDE.md`](GUIDE.md). Công cụ chia dữ liệu và chấm điểm do giảng viên viết sẵn và **không được sửa**.
 
+Phần triển khai học viên nằm trong `lab/`, notebook đã có các cell chạy E0–E4.
+Notebook nhúng mã nguồn, chạy trên Colab web bằng ổ tạm và tải ZIP kết quả qua trình duyệt:
+[`RUN_COLAB_WEB.md`](RUN_COLAB_WEB.md).
+Các kết quả GPU chưa được tạo tại máy local; báo cáo chỉ được điền sau khi chạy thật.
+
 | File | Dùng để làm gì |
 |---|---|
 | `README.md` (file này) | Bức tranh toàn lab, dữ liệu, môi trường, cách nộp |
