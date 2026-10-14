@@ -1,7 +1,7 @@
 [
   {
     "image_id": "20250216_164325",
-    "file": "report\\figures\\ground_truth\\20250216_164325.png",
+    "file": "report/figures/ground_truth/20250216_164325.png",
     "category": "error",
     "tp": 0,
     "fp": 0,
@@ -10,7 +10,7 @@
   },
   {
     "image_id": "20250216_164521",
-    "file": "report\\figures\\ground_truth\\20250216_164521.png",
+    "file": "report/figures/ground_truth/20250216_164521.png",
     "category": "error",
     "tp": 0,
     "fp": 0,
@@ -19,7 +19,7 @@
   },
   {
     "image_id": "20250216_164541",
-    "file": "report\\figures\\ground_truth\\20250216_164541.png",
+    "file": "report/figures/ground_truth/20250216_164541.png",
     "category": "error",
     "tp": 0,
     "fp": 0,
@@ -28,7 +28,7 @@
   },
   {
     "image_id": "20250219_164649",
-    "file": "report\\figures\\ground_truth\\20250219_164649.png",
+    "file": "report/figures/ground_truth/20250219_164649.png",
     "category": "error",
     "tp": 0,
     "fp": 0,
@@ -37,7 +37,7 @@
   },
   {
     "image_id": "20250219_164714",
-    "file": "report\\figures\\ground_truth\\20250219_164714.png",
+    "file": "report/figures/ground_truth/20250219_164714.png",
     "category": "error",
     "tp": 0,
     "fp": 0,
@@ -46,7 +46,7 @@
   },
   {
     "image_id": "20250219_164738",
-    "file": "report\\figures\\ground_truth\\20250219_164738.png",
+    "file": "report/figures/ground_truth/20250219_164738.png",
     "category": "error",
     "tp": 0,
     "fp": 0,

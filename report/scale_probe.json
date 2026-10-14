@@ -1,0 +1,5 @@
+{
+  "description": "Synthetic unit-scale check, not a model test result",
+  "pixel_f1": 1.0,
+  "wrong_norm1000_f1": 0.0
+}
