@@ -90,9 +90,11 @@ def train_once(name, config, batch_size=1, grad_accum=8, fraction=1.0):
         return
     if directory.exists() and any(directory.iterdir()):
         raise ValueError(f"Run chưa hoàn chỉnh: {directory}; dùng tên run mới để tránh ghi đè")
+    backup = os.environ.get("LAB_CHECKPOINT_BACKUP")
+    backup_args = ["--backup", backup] if backup else []
     command("-m", "lab", "train", "--config", config, "--out", directory,
             "--name", name.upper(), "--fraction", fraction, "--batch-size", batch_size,
-            "--grad-accum", grad_accum, "--max-steps", 300)
+            "--grad-accum", grad_accum, "--max-steps", 300, *backup_args)
 
 
 def evaluate(name, split, inference_batch=1):
