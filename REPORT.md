@@ -1,48 +1,65 @@
-Họ tên: <điền họ tên>
-`dataset_version`: <điền, lấy từ data/splits/meta.json>
+# Báo cáo LAB Day 10 — Bản nộp tạm
 
-## Bảng tổng hợp (số của bạn, lấy từ `report/evidence/*.json`)
+Họ tên: Nguyễn Văn Hồng  
+Ngày cập nhật: 16/10/2026  
+dataset_version: `d10-21e4070301`
 
-| Mã | Setup | Tham số huấn luyện | VRAM đỉnh (GB) | Phút | F1 | CI95 | FP/ảnh | F1 pothole | F1 crack | F1 manhole |
-|---|---|---|---|---|---|---|---|---|---|---|
-| E0 | zero-shot | 0 | | | | | | | | |
-| E1 | LoRA LLM | | | | | | | | | |
-| E2 | + projector | | | | | | | | | |
-| E3 | + LoRA ViT | | | | | | | | | |
-| E4 | (ghi biến và giá trị) | | | | | | | | | |
+## Trạng thái bản nộp
 
-## 10 câu hỏi (trả lời bằng **số của bạn**, không chép lại tài liệu)
+Đây là bản nộp tạm theo yêu cầu của học viên, chưa phải bản hoàn tất.
+E1–E3 đã huấn luyện 300 bước và chấm đủ 311 ảnh test trên Colab.
+E4 (10% dữ liệu train) đang chạy; log gần nhất xác nhận bước 200/300.
+Chưa có kết quả E4 cuối cùng, không suy diễn số liệu từ loss.
 
-### Câu 1 — Kiến trúc: ViT, projector và LLM của Qwen3-VL-4B có bao nhiêu tham số mỗi khối, và E1/E2/E3 mỗi cái cập nhật khối nào?
-<điền>
+Các số E1–E3 dưới đây được ghi lại từ log scorer trên Colab, làm tròn ba chữ số.
+Evidence JSON E1–E3, ảnh dự đoán và thông tin tài nguyên đầy đủ hiện được lưu trong
+`MyDrive/lab-day10/results/e3-test.zip` của tài khoản chạy
+`thainguyenvan193@gmail.com`; chưa đồng bộ về commit nộp tạm này.
+Repo hiện có evidence JSON chính xác của E0. Không tạo JSON thay thế từ các số làm tròn.
 
-### Câu 2 — E0: `parse_valid_rate` bằng bao nhiêu, và hai lỗi phổ biến nhất của model gốc là gì (kèm một ví dụ output thô)?
-<điền>
+Notebook: [lab_day10_colab.ipynb](https://colab.research.google.com/drive/1bdy_FR8JcOyX287_Jw6TK4kS5d6xBq7N?authuser=2).
 
-### Câu 3 — Thang 0–1000: nếu chấm output theo pixel (hoặc ngược lại) thì F1 ra sao và vì sao? Bạn đã kiểm chứng điều này thế nào?
-<điền>
+## Kết quả đã quan sát
 
-### Câu 4 — Mask loss: vì sao chỉ tính loss trên phần trả lời? Điều gì xảy ra nếu tính trên cả prompt và token ảnh?
-<điền>
+- E0, zero-shot: test F1 = 0.05544554455445545; JSON hợp lệ = 0.6302250803858521.
+  CI95 F1 = [0.037037037037037035, 0.07684319833852545].
+  Nguồn: `report/evidence/e0.json`.
+- E1, LoRA LLM: validation F1 = 0.195; test F1 = 0.260,
+  precision = 0.281, recall = 0.242, JSON hợp lệ = 0.987.
+- E2, LoRA LLM + projector đầy đủ: validation F1 = 0.270;
+  test F1 = 0.332, precision = 0.353, recall = 0.312, JSON hợp lệ = 1.000.
+- E3, thêm LoRA ViT: validation F1 = 0.363; test F1 = 0.432,
+  precision = 0.459, recall = 0.408, JSON hợp lệ = 1.000.
+  Loss bước 300 = 0.4278.
+- E4: chọn setup E3 bằng validation, so sánh 10% với 100% dữ liệu train;
+  giữ 300 bước. Chưa báo cáo điểm cuối.
 
-### Câu 5 — Vì sao không thể huấn luyện đầy đủ projector nếu ViT bị lượng tử hoá 4-bit, và bạn đã xử lý thế nào? Vì sao projector phải ở float32?
-<điền>
+E3 được chọn bằng validation trước khi đọc kết quả test.
+Trên phiên chạy này, mở projector tăng test F1 khoảng 0.072 so với E1;
+thêm LoRA ViT tăng khoảng 0.100 so với E2.
+Cần dùng CI95 và tài nguyên từ JSON gốc để hoàn tất nhận xét về hiệu quả chi phí.
 
-### Câu 6 — Split theo phiên quay: vì sao chia ngẫu nhiên sẽ cho F1 cao giả? Số ảnh và số box từng lớp ở mỗi split là bao nhiêu?
-<điền>
+## Dữ liệu và phương pháp
 
-### Câu 7 — So sánh E1/E2/E3: mở projector và LoRA trên ViT có đáng không (F1, CI95, VRAM, thời gian)?
-<điền>
+Chia theo phiên quay: train 1.422 ảnh/13 phiên, validation 276 ảnh/2 phiên,
+test 311 ảnh/3 phiên. Số box pothole/crack/manhole tương ứng:
+train 1.074/1.750/691; validation 66/470/103; test 121/299/163.
+Chia theo phiên giúp hạn chế rò rỉ giữa các khung hình gần nhau.
 
-### Câu 8 — Tập test có 311 ảnh: khoảng tin cậy rộng thế nào, và điều đó giới hạn kết luận so sánh các setup ra sao?
-<điền>
+Model Qwen/Qwen3-VL-4B-Instruct; GPU T4; batch size 1, gradient accumulation 8,
+seed 42, 300 bước mỗi thí nghiệm. Tọa độ đầu ra là số nguyên thang 0–1000.
+Chỉ tính loss trên câu trả lời; không sửa output thô trước khi chấm.
+LLM dùng NF4; ViT và projector giữ khả năng huấn luyện phù hợp;
+projector huấn luyện bằng float32.
+E1 cập nhật 33.030.144 tham số, E2 142.135.296, E3 148.426.752.
 
-### Câu 9 — Phân tích lỗi theo lớp: lớp nào kém nhất và vì sao (kích thước box, số mẫu, ngữ nghĩa)? Kèm ảnh minh hoạ.
-<điền>
+## Còn thiếu trước bản cuối
 
-### Câu 10 — E4: bạn đổi biến nào, kết quả thế nào, và kết luận có đáng tin không?
-<điền>
+- Hoàn thành E4 và chấm validation/test.
+- Đồng bộ evidence JSON E1–E4 cùng ảnh minh họa từ Drive về repo.
+- Hoàn thiện 10 câu trả lời theo mẫu đề, CI95, thời gian và VRAM thực đo.
+- Chạy lại `python scripts/check_submission.py` và xử lý các mục FAIL.
+- Cập nhật commit cuối lên GitHub.
 
-## Nhìn lại
-
-<điền: điều bạn chưa hiểu, lỗi dữ liệu hoặc mô hình bạn gặp mà công cụ chấm chưa bắt được>
+Bản tạm chưa đáp ứng đầy đủ điều kiện nộp của README/RUBRIC.
+Không tính E5/GRPO là thí nghiệm đã hoàn thành.
